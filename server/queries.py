@@ -1,22 +1,25 @@
 import database
 
-def get_items(table_name):
+SYSTEMS_TABLE_NAME = "Systems"
+
+def get_systems():
     db = database.get_db()
-    items = db.execute(f"SELECT * FROM {table_name}").fetchall() or []
-    print(f"items = {items}")
-    return [dict(s) for s in items]
+    systems = db.execute(f"SELECT * FROM {SYSTEMS_TABLE_NAME}").fetchall() or []
+    arr = [dict(s) for s in systems]
+    print(f"systems = {arr}")
+    return arr
     
 
-def add_item(name, table_name):
-    print(f"add item {name}")
+def add_system(name):
+    print(f"add system {name}")
     db = database.get_db()
-    db.execute(f"INSERT INTO {table_name} (name) VALUES(?)", (name,))
+    db.execute(f"INSERT INTO {SYSTEMS_TABLE_NAME} (name) VALUES(?)", (name,))
     db.commit()
     db.close()
 
-def remove_item(name, table_name):
-    print(f"delete item {name}")
+def delete_system(name):
+    print(f"delete system {name}")
     db = database.get_db()
-    db.execute(f"DELETE FROM {table_name} WHERE name = ?;", (name,))
+    db.execute(f"DELETE FROM {SYSTEMS_TABLE_NAME} WHERE name = ?;", (name,))
     db.commit()
     db.close()

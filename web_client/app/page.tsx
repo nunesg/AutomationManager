@@ -6,11 +6,12 @@ function App() {
   const [itemName, setItemName] = useState("");
   const [items, setItems] = useState([]);
 
-  const API_BASE = "http://localhost:3050"; // your FastAPI server
+  const API_BASE = "http://localhost:3050/api"; // your FastAPI server
 
   const showItemsLocal = async (items: Response) => {
-    const data = JSON.parse(await items.json());
-    console.log("data = ", data);
+    const json = await items.json();
+    console.log("json = ", json);
+    const data = JSON.parse(json.dataJson);
     console.log(typeof data);
     setItems(data);
   };
@@ -18,7 +19,11 @@ function App() {
   // Fetch all items
   const showItems = async () => {
     try {
-      const res = await fetch(`${API_BASE}/itens`);
+      const res = await fetch(`${API_BASE}/list/systems`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: ""
+      });
       showItemsLocal(res)
     } catch (err) {
       console.error("Error fetching items:", err);
@@ -29,7 +34,13 @@ function App() {
   const addItem = async () => {
     if (!itemName || itemName == "") return;
     try {
-      const res = await fetch(`${API_BASE}/add/${itemName}`);
+      const res = await fetch(`${API_BASE}/add/system`,{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: `${itemName}`
+        })
+      });
       showItemsLocal(res);
     } catch (err) {
       console.error("Error adding item:", err);
@@ -40,7 +51,13 @@ function App() {
   const deleteItem = async () => {
     if (!itemName) return;
     try {
-      const res = await fetch(`${API_BASE}/delete/${itemName}`);
+      const res = await fetch(`${API_BASE}/delete/system`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: `${itemName}`
+        })
+      });
       showItemsLocal(res);
     } catch (err) {
       console.error("Error deleting item:", err);
