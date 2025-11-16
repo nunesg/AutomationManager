@@ -43,7 +43,7 @@ async def handle_add_system(data: SystemData):
         "dataJson": list_systems()
     }
 
-@app.get("api/delete/system", response_model=ResponseData)
+@app.post("/api/delete/system", response_model=ResponseData)
 async def handle_delete_system(data: SystemData):
     queries.delete_system(data.name)
     return {
