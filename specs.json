@@ -1,0 +1,47 @@
+
+{
+    "System": {
+        "name": "Granja 0",
+        "description": "Granja de frangos caipiras com sensores de temperatura, portas automáticas e sensores de umidade."
+    },
+
+
+    "Object": [
+        {
+            "name": "Porta 0",
+            "state": "Open"
+        },
+        {
+            "name": "Motor 0",
+            "state": "On"
+        },
+        {
+            "name": "Motor cortina",
+            "state": "Off"
+        },
+        {
+            "name": "Sensor temperatura",
+            "state": "Off"
+        }
+    ], 
+
+    "Action": {
+        "name": "Abrir porta 0"
+    },
+
+    "ActionConfig": {
+        "name": "Abrir porta 0",
+        "preStateObjectChanges": [
+            {
+                "name": "Porta 0",
+                "state": "Opening"
+            }
+        ],
+        "postStateObjectChanges": [
+            {
+                "name": "Porta 0",
+                "state": "Open"
+            }
+        ]
+    }
+}
