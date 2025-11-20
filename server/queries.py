@@ -43,6 +43,18 @@ def add_system(name):
     db.commit()
     db.close()
 
+def delete_object(name, systemName):
+    print(f"delete object {name} from system {systemName}")
+    sys = get_system(systemName)
+    print(f"system = {sys}, id = {sys.get('id')}")
+    if (sys == None or sys.get('id') == None):
+        return "Not deleted"
+    db = database.get_db()
+    db.execute(f"DELETE FROM {OBJECTS_TABLE_NAME} WHERE name = ? AND system_id = ?;", (name, sys.get('id')))
+    db.commit()
+    db.close()
+    return f"Object {name} deleted successfully from system {systemName}"
+
 def delete_system(name):
     print(f"delete system {name}")
     db = database.get_db()

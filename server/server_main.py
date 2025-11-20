@@ -73,5 +73,14 @@ async def handle_add_object(data: ObjectData):
         "dataJson": list_objects(data.systemName)
     }
 
+@app.post("/api/delete/object", response_model=ResponseData)
+async def handle_delete_object(data: ObjectData):
+    msg = queries.delete_object(data.name, data.systemName)
+    return {
+        "ok": True,
+        "message": msg,
+        "dataJson": list_objects(data.systemName)
+    }
+
 def __main__():
     setup_app();
