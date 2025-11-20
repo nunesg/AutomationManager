@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import queries
 import json
-from api_types import SystemData, ResponseData
+from api_types import ObjectData, SystemData, ResponseData
 
 app = FastAPI()
 # allow frontend dev origin
@@ -21,6 +21,9 @@ def setup_app():
 
 def list_systems():
     return json.dumps(queries.get_systems())
+
+def list_objects():
+    return json.dumps(queries.get_objects())
 
 @app.get("/")
 def read_root():
@@ -50,6 +53,15 @@ async def handle_delete_system(data: SystemData):
         "ok": True,
         "message": "System deleted successfully",
         "dataJson": list_systems()
+    }
+
+@app.post("/api/add/object", response_model=ResponseData)
+async def handle_add_object(data: ObjectData):
+    msg = queries.add_object(data.name, data.systemName)
+    return {
+        "ok": True,
+        "message": msg,
+        "dataJson": list_objects()
     }
 
 def __main__():
