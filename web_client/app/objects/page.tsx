@@ -2,51 +2,34 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { useAppContext } from "../system_store";
+import ObjectsList from "./objects_list";
+import ObjectsCRUD from "./objects_crud";
 
 function Objects() {
   
     const [objectsList, setObjectsList] = useState([]);
     const {apiBase, currentSystemName} = useAppContext();
 
-    const updateList = async (items: Response) => {
-        const json = await items.json();
-        console.log("json = ", json);
-        const data = JSON.parse(json.dataJson);
-        console.log(typeof data);
-        setObjectsList(data);
-    };
-
-    useEffect(() => {
-        const initList = async () => {
-            const res = await fetch(`${apiBase}/list/objects`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: `${currentSystemName}`
-                })
-            });
-            updateList(res);
-        };
-        initList();
-    });
   return (
-      <div style={{ display: 'flex', flexDirection: 'column', flex: '0 0 auto', padding: "2rem", fontFamily: "sans-serif"}}>
-        {objectsList != null && objectsList.map((obj) => (
-                <button key={obj.id}
-                    style={{
-                        borderRadius: "5px",
-                        backgroundColor: "darkblue",
-                        fontSize: "16px",
-                        padding: "10px",
-                        minWidth: "300px"
-
-                    }}
-                    onClick={() => {}}
-                    >
-                    {obj.name}
-                </button>
-            ))}
+    <div style={{
+        display: 'flex',
+        flexDirection: 'column'
+    }}>
+      
+      <div style={{
+        fontSize: '24px',
+        fontWeight: 400
+      }}>
+        {currentSystemName}'s objects list
       </div>
+      <div style={{
+        fontSize: '16px'
+      }}>
+        The list below shows all the objects registered under the system named {currentSystemName}
+      </div>
+      
+      <ObjectsList></ObjectsList>
+    </div>
   );
 }
 
