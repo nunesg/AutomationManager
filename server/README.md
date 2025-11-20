@@ -12,9 +12,14 @@ This subfolder contains the server application that will be responsible for:
 
 ## Running instructions
 
+### Run Server
 - Run bash script on terminal:
 `sudo bash ./run_server.sh`
 - Server should run on `http://localhost:3050`
+
+### Run DB
+- Update `database.py` and `schema.sql`
+- Run bash script on terminal: `sudo bash ./setup_db.sh`
 
 ## Supported APIs
 
