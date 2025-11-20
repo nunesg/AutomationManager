@@ -22,8 +22,8 @@ def setup_app():
 def list_systems():
     return json.dumps(queries.get_systems())
 
-def list_objects():
-    return json.dumps(queries.get_objects())
+def list_objects(sysName):
+    return json.dumps(queries.get_objects(sysName))
 
 @app.get("/")
 def read_root():
@@ -35,6 +35,15 @@ async def handle_list_systems():
         "ok": True,
         "message": "Request processed successfully",
         "dataJson": list_systems()
+    }
+
+
+@app.post("/api/list/objects", response_model=ResponseData)
+async def handle_list_objects(data: SystemData):
+    return {
+        "ok": True,
+        "message": "Request processed successfully",
+        "dataJson": list_objects(data.name)
     }
 
 @app.post("/api/add/system", response_model=ResponseData)
@@ -61,7 +70,7 @@ async def handle_add_object(data: ObjectData):
     return {
         "ok": True,
         "message": msg,
-        "dataJson": list_objects()
+        "dataJson": list_objects(data.systemName)
     }
 
 def __main__():

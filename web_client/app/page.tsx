@@ -1,14 +1,12 @@
 'use client'
 
 import React, { useState } from "react";
-import { AppProvider, useAppContext } from "./system_store";
 import SystemList from "./system_list";
 import SystemCRUD from "./system_crud";
 
 function App() {
   
   return (
-    <AppProvider>
 
       <div style={{ display: 'flex', flexDirection: 'column', flex: '0 0 auto', padding: "2rem", fontFamily: "sans-serif"}}>
         <div style={{
@@ -26,7 +24,6 @@ function App() {
         <SystemCRUD></SystemCRUD>
 
       </div>
-    </AppProvider>
   );
 }
 

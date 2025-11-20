@@ -17,9 +17,10 @@ def get_system(name):
     print(f"found system {dic}")
     return dic
 
-def get_objects():
+def get_objects(sysName):
+    sys = get_system(sysName)
     db = database.get_db()
-    objects = db.execute(f"SELECT * FROM {OBJECTS_TABLE_NAME}").fetchall() or []
+    objects = db.execute(f"SELECT * FROM {OBJECTS_TABLE_NAME} WHERE system_id = ?;", (sys.get('id'), )).fetchall() or []
     arr = [dict(obj) for obj in objects]
     print(f"objects = {arr}")
     return arr

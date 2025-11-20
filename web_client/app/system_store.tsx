@@ -1,3 +1,5 @@
+'use client'
+
 // store.ts
 import { createContext, useContext, useState, ReactNode } from 'react';
 
@@ -11,12 +13,15 @@ type AppContextType = {
   setSystems: (systems: SystemData[]) => void;
   updateSystemsList: (systems: Response) => void;
   apiBase: string;
+  currentSystemName: string;
+  setCurrentSystemName: (name: string) => void;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [systems, setSystems] = useState<SystemData[]>([]);
+  const [currentSystemName, setCurrentSystemName] = useState<string>("");
   const apiBase = "http://localhost:3050/api"; // your FastAPI server
 
   const updateSystemsList = async (items: Response) => {
@@ -28,7 +33,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AppContext.Provider value={{ systems, setSystems, updateSystemsList, apiBase }}>
+    <AppContext.Provider value={{ 
+        systems, 
+        setSystems, 
+        updateSystemsList, 
+        apiBase, 
+        currentSystemName, 
+        setCurrentSystemName }}>
       {children}
     </AppContext.Provider>
   );

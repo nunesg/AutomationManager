@@ -2,9 +2,11 @@
 
 import React, { useContext, useEffect } from "react";
 import { useAppContext } from "./system_store";
+import { useRouter } from 'next/navigation';
 
 export default function SystemList() {
-    const { apiBase, systems, updateSystemsList } = useAppContext();
+    const router = useRouter();
+    const { apiBase, systems, updateSystemsList, setCurrentSystemName } = useAppContext();
     
     useEffect(() => {
         const initList = async () => {
@@ -22,6 +24,8 @@ export default function SystemList() {
 
     const onButtonClicked = (name: string) => {
         console.log(name + " clicked!");
+        setCurrentSystemName(name);
+        router.push('/objects')
     };
 
     return (
