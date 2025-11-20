@@ -27,7 +27,13 @@ export default function ObjectsList() {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', flex: '0 0 auto', padding: "2rem", fontFamily: "sans-serif"}}>
+        <div style={{display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            gap: '20px',
+            margin: '1rem'
+            }}>
         {objects != null && objects.map((obj) => (
                 <button key={obj.id}
                     style={{

@@ -19,7 +19,7 @@ export default function ObjectCRUD() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     name: objName,
-                    sysName: currentSystemName
+                    systemName: currentSystemName
                 })
             });
             updateObjectsList(res);
@@ -38,7 +38,7 @@ export default function ObjectCRUD() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     name: objName,
-                    sysName: currentSystemName
+                    systemName: currentSystemName
                 })
             });
             updateObjectsList(res);
