@@ -3,6 +3,7 @@
 import React, { useContext, useEffect } from "react";
 import { useAppContext } from "../system_store";
 import { useObjectsContext } from "./objects_store";
+import { Button } from "@/components/ui/button"
 
 export default function ObjectsList() {
     const {apiBase, currentSystemName} = useAppContext();
@@ -30,24 +31,24 @@ export default function ObjectsList() {
         <div style={{display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-start',
-            alignItems: 'flex-start',
+            alignItems: 'center',
             gap: '20px',
             margin: '1rem'
             }}>
         {objects != null && objects.map((obj) => (
-                <button key={obj.id}
-                    style={{
-                        borderRadius: "5px",
-                        backgroundColor: "darkblue",
-                        fontSize: "16px",
-                        padding: "10px",
-                        minWidth: "300px"
+                <Button key={obj.id}
+                    // style={{
+                    //     borderRadius: "5px",
+                    //     backgroundColor: "darkblue",
+                    //     fontSize: "16px",
+                    //     padding: "10px",
+                    //     minWidth: "300px"
 
-                    }}
+                    // }}
                     onClick={() => {onButtonClicked(obj.name)}}
                     >
                     {obj.name}
-                </button>
+                </Button>
             ))}
       </div>
     );

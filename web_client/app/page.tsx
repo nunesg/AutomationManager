@@ -21,8 +21,7 @@ function App() {
         padding: "2rem", 
         fontFamily: "sans-serif",
         gap: '10px'
-        }}
-        onClick={() => setShowCrud(false)}>
+        }}>
  
         <div style={{
           fontSize: '40px',
