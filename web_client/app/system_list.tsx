@@ -3,6 +3,7 @@
 import React, { useContext, useEffect } from "react";
 import { useAppContext } from "./system_store";
 import { useRouter } from 'next/navigation';
+import { Button } from "@/components/ui/button"
 
 export default function SystemList() {
     const router = useRouter();
@@ -38,19 +39,19 @@ export default function SystemList() {
             margin: '1rem',
          }}>
             {systems != null && systems.map((system) => (
-                <button key={system.id}
-                    style={{
-                        borderRadius: "5px",
-                        backgroundColor: "darkblue",
-                        fontSize: "16px",
-                        padding: "10px",
-                        minWidth: "300px"
+                <Button key={system.id}
+                    // style={{
+                    //     borderRadius: "5px",
+                    //     backgroundColor: "darkblue",
+                    //     fontSize: "16px",
+                    //     padding: "10px",
+                    //     minWidth: "300px"
 
-                    }}
+                    // }}
                     onClick={() => onButtonClicked(system.name)}
                     >
                     {system.name}
-                </button>
+                </Button>
             ))}
         </div>
     );

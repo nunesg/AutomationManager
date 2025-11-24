@@ -60,12 +60,17 @@ export default function ObjectCRUD() {
     ];
 
     return (
-        <div>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+        }}>
             <div style={{
-               fontSize: '24px',
-               fontWeight: 400 
-            }}>CRUD for Objects</div>
-            <div>
+                margin: 0,
+                fontSize: '16px',
+                maxWidth: '70%',
+                textAlign: 'center'
+            }}>
                 Use the field below to add the object name you wanna modify for the system {currentSystemName}
             </div>
             <input
