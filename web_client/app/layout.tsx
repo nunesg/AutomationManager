@@ -2,6 +2,7 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import { AppProvider } from "./system_store";
+import { Card } from "@/components/ui/card";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -35,17 +36,9 @@ export default function RootLayout({
       >
 
         <AppProvider>
-          <div style={{ 
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            flex: '0 0 auto',
-            backgroundColor: "gray", 
-            borderRadius: "20px", 
-            width: '600px'
-          }}>
+          <Card className="bg-gray-400 max-w-lg">
             {children}
-          </div>
+          </Card>
 
         </AppProvider>
       </body>
