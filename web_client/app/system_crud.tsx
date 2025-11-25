@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useAppContext } from "./system_store";
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 
 export default function SystemCRUD() {
@@ -70,12 +71,13 @@ export default function SystemCRUD() {
             }}>
                 Use the field below to add the system name you wanna modify
             </div>
-            <input
+            <Input
                 type="text"
                 value={systemName}
                 placeholder="Enter system name"
                 onChange={(e) => setSystemName(e.target.value)}
-                style={{ padding: "0.5rem", margin: "1rem", fontSize: "1rem", backgroundColor: "gray", borderRadius: "5px" }}
+                className="placeholder:text-gray-600"
+                style={{ margin: "1rem", maxWidth: "50%" }}
             />
             <div
                 style={{

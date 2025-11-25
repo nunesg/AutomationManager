@@ -29,7 +29,8 @@ export default function RootLayout({
           justifyContent: 'center',
           alignItems: 'center',
           width: '100%',
-          height: '100%'
+          height: '100%',
+          backgroundColor: "#000000"
         }}
       >
 

@@ -25,7 +25,7 @@ function Objects() {
         }}>
       
       <div style={{
-        fontSize: '24px',
+        fontSize: '28px',
         fontWeight: 400
       }}>
         {currentSystemName}
