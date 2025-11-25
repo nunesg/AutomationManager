@@ -34,20 +34,12 @@ export default function SystemList() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-start',
-            alignItems: 'flex-start',
+            alignItems: 'center',
             gap: '20px',
             margin: '1rem',
          }}>
             {systems != null && systems.map((system) => (
                 <Button key={system.id}
-                    // style={{
-                    //     borderRadius: "5px",
-                    //     backgroundColor: "darkblue",
-                    //     fontSize: "16px",
-                    //     padding: "10px",
-                    //     minWidth: "300px"
-
-                    // }}
                     onClick={() => onButtonClicked(system.name)}
                     >
                     {system.name}

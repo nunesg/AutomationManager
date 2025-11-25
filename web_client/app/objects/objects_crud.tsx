@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useAppContext } from "../system_store";
 import { useObjectsContext } from "./objects_store";
+import { Button } from "@/components/ui/button"
 
 
 export default function ObjectCRUD() {
@@ -90,17 +91,12 @@ export default function ObjectCRUD() {
             >
                 {
                     buttons.map((btn, index) =>
-                        <button
+                        <Button
                             onClick={btn.onClick}
-                            style={{
-                                padding: "10px",
-                                borderRadius: "5px",
-                                backgroundColor: "blue"
-                            }}
                             key={index}
                         >
                             {btn.buttonName}
-                        </button>
+                        </Button>
                     )
                 }
             </div>

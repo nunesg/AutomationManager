@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useAppContext } from "./system_store";
+import { Button } from "@/components/ui/button"
 
 
 export default function SystemCRUD() {
@@ -86,17 +87,12 @@ export default function SystemCRUD() {
             >
                 {
                     buttons.map((btn, index) =>
-                        <button
+                        <Button
                             onClick={btn.onClick}
-                            style={{
-                                padding: "10px",
-                                borderRadius: "5px",
-                                backgroundColor: "blue"
-                            }}
                             key={index}
                         >
                             {btn.buttonName}
-                        </button>
+                        </Button>
                     )
                 }
             </div>

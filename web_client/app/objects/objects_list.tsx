@@ -37,14 +37,6 @@ export default function ObjectsList() {
             }}>
         {objects != null && objects.map((obj) => (
                 <Button key={obj.id}
-                    // style={{
-                    //     borderRadius: "5px",
-                    //     backgroundColor: "darkblue",
-                    //     fontSize: "16px",
-                    //     padding: "10px",
-                    //     minWidth: "300px"
-
-                    // }}
                     onClick={() => {onButtonClicked(obj.name)}}
                     >
                     {obj.name}
