@@ -16,4 +16,4 @@ if [ -z "$PID" ] || [ "$PID" -eq 0 ]; then
   echo "No process found running on port $PORT. Lanching server..."
 fi
 
-npm run dev
+npm run dev -- -H 0.0.0.0

@@ -30,7 +30,7 @@ if [ -z "$PID" ] || [ "$PID" -eq 0 ]; then
   echo "No process found running on port $PORT. Lanching server..."
 fi
 
-fastapi dev server_main.py --port $PORT
+uvicorn server_main:app --host 0.0.0.0 --port $PORT --reload
 echo "Done."
 
 exit 0
