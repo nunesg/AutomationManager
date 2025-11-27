@@ -19,6 +19,7 @@ function Objects() {
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'center',
+        textAlign: "center",
         padding: "2rem", 
         fontFamily: "sans-serif",
         gap: "10px"
@@ -33,7 +34,7 @@ function Objects() {
       <div style={{
         fontSize: '16px',
         textAlign: 'center',
-        maxWidth: '65%'
+        padding: "0 30px 0 30px"
       }}>
         The list below shows all the objects registered under the system named {currentSystemName}
       </div>
@@ -43,15 +44,16 @@ function Objects() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        background: '#888888',
         borderRadius: '10px',
         padding: '10px',
         maxWidth: '70%'
-      }}>
+      }}
+      className="bg-gray-600"
+      >
         {
-            showCrud && <Expand text="done" toggleState={toggleState} />
+            showCrud && <Expand currentState={showCrud} toggleState={toggleState} />
             ||
-            !showCrud && <Expand text="edit" toggleState={toggleState} />
+            !showCrud && <Expand currentState={showCrud} toggleState={toggleState} />
         }
         {
             showCrud && <ObjectsCRUD />

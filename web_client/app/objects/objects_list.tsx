@@ -38,6 +38,11 @@ export default function ObjectsList() {
         {objects != null && objects.map((obj) => (
                 <Button key={obj.id}
                     onClick={() => {onButtonClicked(obj.name)}}
+                    className="
+                        hover:bg-zinc-600 
+                        hover:scale-105 
+                        transition-all duration-150
+                    "
                     >
                     {obj.name}
                 </Button>

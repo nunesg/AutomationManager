@@ -41,6 +41,11 @@ export default function SystemList() {
             {systems != null && systems.map((system) => (
                 <Button key={system.id}
                     onClick={() => onButtonClicked(system.name)}
+                    className="
+                        hover:bg-zinc-600 
+                        hover:scale-105 
+                        transition-all duration-150
+                    "
                     >
                     {system.name}
                 </Button>

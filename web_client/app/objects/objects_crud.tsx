@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import { useAppContext } from "../system_store";
 import { useObjectsContext } from "./objects_store";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 
 export default function ObjectCRUD() {
@@ -75,12 +76,13 @@ export default function ObjectCRUD() {
             }}>
                 Use the field below to add the object name you wanna modify for the system {currentSystemName}
             </div>
-            <input
+            <Input
                 type="text"
                 value={objName}
                 placeholder="Enter object name"
                 onChange={(e) => setObjName(e.target.value)}
-                style={{ padding: "0.5rem", margin: "1rem", fontSize: "1rem", backgroundColor: "gray", borderRadius: "5px" }}
+                className="placeholder:text-zinc-400"
+                style={{ margin: "1rem", maxWidth: "50%" }}
             />
             <div
                 style={{
@@ -95,6 +97,11 @@ export default function ObjectCRUD() {
                         <Button
                             onClick={btn.onClick}
                             key={index}
+                            className="
+                                hover:bg-zinc-600 
+                                hover:scale-105 
+                                transition-all duration-150
+                            "
                         >
                             {btn.buttonName}
                         </Button>

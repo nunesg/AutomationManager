@@ -23,11 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-400`}
         style={{
           width: "100%",
           height: "100%",
-          backgroundColor: "#AAAAAA",
           color: "#FFFFFF"
         }}
       >

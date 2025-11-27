@@ -18,6 +18,7 @@ function App() {
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'center',
+        textAlign: 'center',
         padding: "2rem", 
         fontFamily: "sans-serif",
         gap: '10px'
@@ -40,16 +41,16 @@ function App() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          background: '#888888',
           borderRadius: '10px',
           padding: '10px',
           maxWidth: '70%'
-        }}>
+        }}
+        className="bg-gray-600">
           
           {
-            showCrud && <Expand text="done" toggleState={toggleState} />
+            showCrud && <Expand currentState={showCrud} toggleState={toggleState} />
             ||
-            !showCrud && <Expand text="edit" toggleState={toggleState} />
+            !showCrud && <Expand currentState={showCrud} toggleState={toggleState} />
           }
           {
             showCrud && <SystemCRUD />

@@ -1,27 +1,33 @@
 'use client'
 
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 
 interface ExpandProps {
-    text: string;
+    currentState: boolean;
     toggleState: () => void;
 }
 
-export default function Expand({text, toggleState}: ExpandProps) {
+export default function Expand({currentState, toggleState}: ExpandProps) {
+
+  const uri = !currentState ? "/edit_icon_white.png" : "/cancel_icon_white.png";
+  
   return (
 
-      <Button style={{ 
-        display: 'flex', 
-        flexDirection: 'row', 
-        alignItems: 'center',
-        justifyContent: 'center',
-        }}
+      <Button 
         onClick={toggleState}
         variant="ghost"
+        size="icon"
+        className="flex items-center justify-center rounded-full hover:bg-zinc-400 
+                        hover:scale-125 
+                        transition-all duration-150"
         >
-
-        {text}
-
+        <Image
+          src={uri}
+          alt="icon"
+          width={20}
+          height={20}
+        />
       </Button>
   );
 }

@@ -77,7 +77,7 @@ export default function SystemCRUD() {
                 value={systemName}
                 placeholder="Enter system name"
                 onChange={(e) => setSystemName(e.target.value)}
-                className="placeholder:text-gray-600"
+                className="placeholder:text-zinc-400"
                 style={{ margin: "1rem", maxWidth: "50%" }}
             />
             <div
@@ -93,6 +93,11 @@ export default function SystemCRUD() {
                         <Button
                             onClick={btn.onClick}
                             key={index}
+                            className="
+                                hover:bg-zinc-600 
+                                hover:scale-105 
+                                transition-all duration-150
+                            "
                         >
                             {btn.buttonName}
                         </Button>
