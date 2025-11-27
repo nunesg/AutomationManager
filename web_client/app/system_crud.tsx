@@ -85,6 +85,7 @@ export default function SystemCRUD() {
                     display: 'flex',
                     justifyContent: 'flex-start',
                     alignItems: 'flex-start',
+                    flexWrap: 'wrap',
                     gap: '10px'
                 }}
             >

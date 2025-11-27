@@ -89,7 +89,8 @@ export default function ObjectCRUD() {
                     display: 'flex',
                     justifyContent: 'flex-start',
                     alignItems: 'flex-start',
-                    gap: '10px'
+                    flexWrap: 'wrap',
+                    gap: '10px',
                 }}
             >
                 {
