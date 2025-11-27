@@ -18,9 +18,12 @@ export default function Expand({currentState, toggleState}: ExpandProps) {
         onClick={toggleState}
         variant="ghost"
         size="icon"
-        className="flex items-center justify-center rounded-full hover:bg-zinc-400 
-                        hover:scale-125 
-                        transition-all duration-150"
+        className="flex items-center justify-center rounded-full 
+            hover:bg-zinc-400 
+            hover:scale-125 
+            transition-all duration-150
+            active:bg-zinc-300 
+            active:scale-80"
         >
         <Image
           src={uri}

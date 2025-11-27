@@ -40,7 +40,9 @@ export default function ObjectsList() {
                     onClick={() => {onButtonClicked(obj.name)}}
                     className="
                         hover:bg-zinc-600 
-                        hover:scale-105 
+                        hover:scale-105  
+                        active:bg-zinc-500 
+                        active:scale-80
                         transition-all duration-150
                     "
                     >
