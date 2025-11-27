@@ -61,13 +61,14 @@ export default function SystemCRUD() {
         <div style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'center',
+            padding: '10px',
         }}>
             <div style={{
                 margin: 0,
                 fontSize: '16px',
-                maxWidth: '70%',
-                textAlign: 'center'
+                textAlign: 'center',
+                padding: '0 30px 0 30px'
             }}>
                 Use the field below to add the system name you wanna modify
             </div>

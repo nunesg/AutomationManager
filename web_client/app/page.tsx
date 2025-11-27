@@ -42,7 +42,8 @@ function App() {
           alignItems: 'center',
           background: '#888888',
           borderRadius: '10px',
-          padding: '10px'
+          padding: '10px',
+          maxWidth: '70%'
         }}>
           
           {

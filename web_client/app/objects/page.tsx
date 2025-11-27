@@ -33,7 +33,7 @@ function Objects() {
       <div style={{
         fontSize: '16px',
         textAlign: 'center',
-        maxWidth: '70%'
+        maxWidth: '65%'
       }}>
         The list below shows all the objects registered under the system named {currentSystemName}
       </div>
@@ -45,7 +45,8 @@ function Objects() {
         alignItems: 'center',
         background: '#888888',
         borderRadius: '10px',
-        padding: '10px'
+        padding: '10px',
+        maxWidth: '70%'
       }}>
         {
             showCrud && <Expand text="done" toggleState={toggleState} />

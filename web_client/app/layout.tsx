@@ -25,21 +25,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          height: '100%',
-          backgroundColor: "#000000"
+          width: "100%",
+          height: "100%",
+          backgroundColor: "#AAAAAA",
+          color: "#FFFFFF"
         }}
       >
 
         <AppProvider>
-          <Card className="bg-gray-400 max-w-lg">
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "center"
+          }}>
             {children}
-          </Card>
-
+          </div>
         </AppProvider>
       </body>
     </html>

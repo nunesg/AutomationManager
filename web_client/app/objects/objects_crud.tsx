@@ -64,12 +64,13 @@ export default function ObjectCRUD() {
         <div style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'center',
+            padding: '10px'
         }}>
             <div style={{
                 margin: 0,
                 fontSize: '16px',
-                maxWidth: '70%',
+                padding: '0 30px 0 30px',
                 textAlign: 'center'
             }}>
                 Use the field below to add the object name you wanna modify for the system {currentSystemName}
