@@ -16,4 +16,8 @@ if [ -z "$PID" ] || [ "$PID" -eq 0 ]; then
   echo "No process found running on port $PORT. Lanching server..."
 fi
 
-npm run dev -- -H 0.0.0.0
+IP_ADDR=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null)
+
+echo "NEXT_PUBLIC_BACKEND_URL=http://$IP_ADDR:$PORT" > frontend/.env.local
+
+npm run dev -- -H $IP_ADDR

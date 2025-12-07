@@ -30,7 +30,11 @@ if [ -z "$PID" ] || [ "$PID" -eq 0 ]; then
   echo "No process found running on port $PORT. Lanching server..."
 fi
 
-uvicorn server_main:app --host 0.0.0.0 --port $PORT --reload
+IP_ADDR=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null)
+
+echo "IP_ADDR = $IP_ADDR"
+
+uvicorn server_main:app --host $IP_ADDR --port $PORT --reload
 echo "Done."
 
 exit 0
