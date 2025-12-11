@@ -2,6 +2,7 @@ import database
 
 SYSTEMS_TABLE_NAME = "Systems"
 OBJECTS_TABLE_NAME = "Objects"
+ACTIONS_TABLE_NAME = "Actions"
 
 def get_systems():
     db = database.get_db()
@@ -61,3 +62,34 @@ def delete_system(name):
     db.execute(f"DELETE FROM {SYSTEMS_TABLE_NAME} WHERE name = ?;", (name,))
     db.commit()
     db.close()
+
+# returns actions registered for a specific object
+def get_actions(sysId, objId = None):
+    db = database.get_db()
+    if (objId == None):
+        return get_actions(sysId)
+    actions_arr = db.execute(
+        f"SELECT * FROM {ACTIONS_TABLE_NAME} WHERE system_id = ? AND object_id = ?;", 
+        sysId, objId)
+    arr = [dict(actions) for actions in actions_arr]
+    print(f"actions for system {sysId} and obj {objId} = {arr}")
+    return arr
+
+def get_actions(sysId):
+    db = database.get_db()
+    actions = db.execute(f"SELECT * FROM {ACTIONS_TABLE_NAME} WHERE system_id = ?;", sysId)
+    arr = [dict(action) for action in actions]
+    print(f"actions for system {sysId} = {arr}")
+    return arr
+
+# todo: make this id based (need to update auxiliary methods and other apis)
+def add_action(objName, sysName):
+    sys = get_system(sysName)
+    print(f"system = {sys}, id = {sys.get('id')}")
+    if (sys == None or sys.get('id') == None):
+        return "Not added"
+    db = database.get_db()
+    db.execute(f"INSERT INTO {OBJECTS_TABLE_NAME} (name, system_id) VALUES(?, ?)", (objName, sys.get('id')))
+    db.commit()
+    db.close()
+    return f"Object {objName} added successfully referencing system {sysName}"
