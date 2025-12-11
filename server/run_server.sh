@@ -30,7 +30,7 @@ if [ -z "$PID" ] || [ "$PID" -eq 0 ]; then
   echo "No process found running on port $PORT. Lanching server..."
 fi
 
-IP_ADDR=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null)
+IP_ADDR=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/null || echo "localhost")
 
 echo "IP_ADDR = $IP_ADDR"
 
