@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import queries
 import json
-from api_types import ObjectData, SystemData, ResponseData
+from api_types import ObjectData, SystemData, ActionData, ResponseData
 
 app = FastAPI()
 # allow frontend dev origin
@@ -22,8 +22,11 @@ def setup_app():
 def list_systems():
     return json.dumps(queries.get_systems())
 
-def list_objects(sysName):
-    return json.dumps(queries.get_objects(sysName))
+def list_objects(systemId):
+    return json.dumps(queries.get_objects(systemId))
+
+def list_actions(systemId):
+    return json.dumps(queries.get_actions(systemId))
 
 @app.get("/")
 def read_root():
@@ -35,15 +38,6 @@ async def handle_list_systems():
         "ok": True,
         "message": "Request processed successfully",
         "dataJson": list_systems()
-    }
-
-
-@app.post("/api/list/objects", response_model=ResponseData)
-async def handle_list_objects(data: SystemData):
-    return {
-        "ok": True,
-        "message": "Request processed successfully",
-        "dataJson": list_objects(data.name)
     }
 
 @app.post("/api/add/system", response_model=ResponseData)
@@ -64,22 +58,58 @@ async def handle_delete_system(data: SystemData):
         "dataJson": list_systems()
     }
 
+@app.post("/api/list/objects", response_model=ResponseData)
+async def handle_list_objects(data: SystemData):
+    return {
+        "ok": True,
+        "message": "Request processed successfully",
+        "dataJson": list_objects(data.id)
+    }
+
 @app.post("/api/add/object", response_model=ResponseData)
 async def handle_add_object(data: ObjectData):
-    msg = queries.add_object(data.name, data.systemName)
+    msg = queries.add_object(data.name, data.systemId)
     return {
         "ok": True,
         "message": msg,
-        "dataJson": list_objects(data.systemName)
+        "dataJson": list_objects(data.systemId)
     }
 
 @app.post("/api/delete/object", response_model=ResponseData)
 async def handle_delete_object(data: ObjectData):
-    msg = queries.delete_object(data.name, data.systemName)
+    msg = queries.delete_object(data.name, data.systemId)
     return {
         "ok": True,
         "message": msg,
-        "dataJson": list_objects(data.systemName)
+        "dataJson": list_objects(data.systemId)
+    }
+
+
+@app.post("/api/list/actions", response_model=ResponseData)
+async def handle_list_actions(data: SystemData):
+    return {
+        "ok": True,
+        "message": "Request processed successfully",
+        "dataJson": list_actions(data.id)
+    }
+
+@app.post("/api/add/action", response_model=ResponseData)
+async def handle_add_action(data: ActionData):
+    msg = queries.add_action(data)
+    print(msg)
+    return {
+        "ok": True,
+        "message": msg,
+        "dataJson": list_actions(data.systemId)
+    }
+
+@app.post("/api/delete/action", response_model=ResponseData)
+async def handle_delete_action(data: ActionData):
+    msg = queries.delete_action(data)
+    return {
+        "ok": True,
+        "message": msg,
+        "dataJson": list_actions(data.systemId)
     }
 
 def __main__():

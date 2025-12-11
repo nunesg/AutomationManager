@@ -3,15 +3,21 @@ from pydantic import BaseModel
 from typing import Optional
 
 class SystemData(BaseModel):
-    id: Optional[int] = None
-    name: str
+    id: int
+    name: Optional[str] = None
 
 class ObjectData(BaseModel):
-    id: Optional[int] = None
-    name: str
-    systemName: str
+    id: int
+    systemId: int
+    name: Optional[str] = None
+
+class ActionData(BaseModel):
+    id: int
+    systemId: int
+    objectId: Optional[int] = None
+    name: Optional[str] = None
 
 class ResponseData(BaseModel):
     ok: bool
     message: str = ""
-    dataJson: Optional[str]
+    dataJson: Optional[str] = "{}"
