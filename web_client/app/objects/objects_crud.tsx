@@ -31,33 +31,10 @@ export default function ObjectCRUD() {
         }
     };
 
-    // Delete an item
-    const deleteItem = async () => {
-        if (!objName) return;
-        try {
-            const res = await fetch(`${apiBase}/delete/object`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: objName,
-                    systemName: currentSystem
-                })
-            });
-            updateObjectsList(res);
-            setObjName("");
-        } catch (err) {
-            console.error("Error deleting object:", err);
-        }
-    };
-
     const buttons = [
         {
             buttonName: 'Add Object',
             onClick: addItem
-        },
-        {
-            buttonName: 'Delete Object',
-            onClick: deleteItem
         }
     ];
 
@@ -74,7 +51,7 @@ export default function ObjectCRUD() {
                 padding: '0 30px 0 30px',
                 textAlign: 'center'
             }}>
-                Use the field below to add the object name you wanna modify for the system {currentSystem.name}
+                Put the object name you wanna for the system {currentSystem.name} on the field below
             </div>
             <Input
                 type="text"
