@@ -1,6 +1,7 @@
 import database
 
 from api_types import ObjectData, SystemData, ActionData
+from utils import camelize
 
 SYSTEMS_TABLE_NAME = "Systems"
 OBJECTS_TABLE_NAME = "Objects"
@@ -33,7 +34,7 @@ def get_objects(systemId: int):
         return []
     db = database.get_db()
     objects = db.execute(f"SELECT * FROM {OBJECTS_TABLE_NAME} WHERE system_id = ?;", (systemId, )).fetchall() or []
-    arr = [dict(obj) for obj in objects]
+    arr = [camelize(dict(obj)) for obj in objects]
     print(f"objects = {arr}")
     return arr
 
