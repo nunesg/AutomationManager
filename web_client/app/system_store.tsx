@@ -3,7 +3,7 @@
 // store.ts
 import { createContext, useContext, useState, ReactNode } from 'react';
 
-type SystemData = {
+export type SystemData = {
     id: number;
     name: string;
 };
@@ -13,15 +13,15 @@ type AppContextType = {
   setSystems: (systems: SystemData[]) => void;
   updateSystemsList: (systems: Response) => void;
   apiBase: string;
-  currentSystemName: string;
-  setCurrentSystemName: (name: string) => void;
+  currentSystem: SystemData;
+  setCurrentSystem: (data: SystemData) => void;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [systems, setSystems] = useState<SystemData[]>([]);
-  const [currentSystemName, setCurrentSystemName] = useState<string>("");
+  const [currentSystem, setCurrentSystem] = useState<SystemData>({id: 0, name: "Default"});
   const ip = process.env.NEXT_PUBLIC_LOCAL_IP;
   const apiBase = `http://${ip}:3050/api`; // your FastAPI server
 
@@ -39,8 +39,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setSystems, 
         updateSystemsList, 
         apiBase, 
-        currentSystemName, 
-        setCurrentSystemName }}>
+        currentSystem, 
+        setCurrentSystem }}>
       {children}
     </AppContext.Provider>
   );

@@ -9,7 +9,7 @@ import Expand from "../expand";
 function Objects() {
   
     const [showCrud, setShowCrud] = useState(false);
-    const {apiBase, currentSystemName} = useAppContext();
+    const {apiBase, currentSystem} = useAppContext();
 
     const toggleState = () => {
         setShowCrud(!showCrud);
@@ -29,14 +29,14 @@ function Objects() {
         fontSize: '28px',
         fontWeight: 400
       }}>
-        {currentSystemName}
+        {currentSystem.name}
       </div>
       <div style={{
         fontSize: '16px',
         textAlign: 'center',
         padding: "0 30px 0 30px"
       }}>
-        The list below shows all the objects registered under the system named {currentSystemName}
+        The list below shows all the objects registered under the system named {currentSystem.name}
       </div>
       
       <ObjectsList />

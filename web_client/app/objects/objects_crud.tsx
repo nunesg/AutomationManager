@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 
 export default function ObjectCRUD() {
     const [objName, setObjName] = useState("");
-    const { apiBase, currentSystemName } = useAppContext();
+    const { apiBase, currentSystem } = useAppContext();
     const {updateObjectsList} = useObjectsContext();
 
     // Add an item
@@ -21,7 +21,7 @@ export default function ObjectCRUD() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     name: objName,
-                    systemName: currentSystemName
+                    systemName: currentSystem
                 })
             });
             updateObjectsList(res);
@@ -40,7 +40,7 @@ export default function ObjectCRUD() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     name: objName,
-                    systemName: currentSystemName
+                    systemName: currentSystem
                 })
             });
             updateObjectsList(res);
@@ -74,7 +74,7 @@ export default function ObjectCRUD() {
                 padding: '0 30px 0 30px',
                 textAlign: 'center'
             }}>
-                Use the field below to add the object name you wanna modify for the system {currentSystemName}
+                Use the field below to add the object name you wanna modify for the system {currentSystem.name}
             </div>
             <Input
                 type="text"

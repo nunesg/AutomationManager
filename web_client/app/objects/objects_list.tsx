@@ -6,7 +6,7 @@ import { useObjectsContext } from "./objects_store";
 import { Button } from "@/components/ui/button"
 
 export default function ObjectsList() {
-    const {apiBase, currentSystemName} = useAppContext();
+    const {apiBase, currentSystem} = useAppContext();
     const {objects, updateObjectsList} = useObjectsContext();
 
     useEffect(() => {
@@ -14,14 +14,12 @@ export default function ObjectsList() {
             const res = await fetch(`${apiBase}/list/objects`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: `${currentSystemName}`
-                })
+                body: JSON.stringify(currentSystem)
             });
             updateObjectsList(res);
         };
         initList();
-    }, [currentSystemName]);
+    }, [currentSystem]);
 
     const onButtonClicked = (name: string) => {
         console.log(name + " clicked!");

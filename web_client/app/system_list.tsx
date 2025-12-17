@@ -1,13 +1,13 @@
 'use client'
 
 import React, { useContext, useEffect } from "react";
-import { useAppContext } from "./system_store";
+import { useAppContext, type SystemData } from "./system_store";
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button"
 
 export default function SystemList() {
     const router = useRouter();
-    const { apiBase, systems, updateSystemsList, setCurrentSystemName } = useAppContext();
+    const { apiBase, systems, updateSystemsList, setCurrentSystem } = useAppContext();
     
     useEffect(() => {
         const initList = async () => {
@@ -23,9 +23,9 @@ export default function SystemList() {
         }
     });
 
-    const onButtonClicked = (name: string) => {
-        console.log(name + " clicked!");
-        setCurrentSystemName(name);
+    const onButtonClicked = (data: SystemData) => {
+        console.log(`system ${data.name} with id ${data.id} clicked!`);
+        setCurrentSystem(data);
         router.push('/objects')
     };
 
@@ -40,7 +40,7 @@ export default function SystemList() {
          }}>
             {systems != null && systems.map((system) => (
                 <Button key={system.id}
-                    onClick={() => onButtonClicked(system.name)}
+                    onClick={() => onButtonClicked(system)}
                     className="
                         hover:bg-zinc-600 
                         hover:scale-105 
