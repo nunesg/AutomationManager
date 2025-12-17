@@ -3,10 +3,10 @@
 // store.ts
 import { createContext, useContext, useState, ReactNode } from 'react';
 
-type ObjectData = {
+export type ObjectData = {
     id: number;
     name: string;
-    sysName: string;
+    systemId: string;
 };
 
 type ObjectContextType = {

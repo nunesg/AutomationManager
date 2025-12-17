@@ -2,8 +2,9 @@
 
 import React, { useContext, useEffect } from "react";
 import { useAppContext } from "../system_store";
-import { useObjectsContext } from "./objects_store";
+import { useObjectsContext, type ObjectData } from "./objects_store";
 import { Button } from "@/components/ui/button"
+import { DeleteSideBtn } from "@/components/ui/ui_utils";
 
 export default function ObjectsList() {
     const {apiBase, currentSystem} = useAppContext();
@@ -25,6 +26,22 @@ export default function ObjectsList() {
         console.log(name + " clicked!");
     };
 
+
+    // Delete an item
+    const deleteItem = async (object: ObjectData) => {
+        try {
+            console.log(`trying to delete item ${JSON.stringify(object)}`)
+            const res = await fetch(`${apiBase}/delete/object`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(object)
+            });
+            updateObjectsList(res);
+        } catch (err) {
+            console.error("Error deleting object:", err);
+        }
+    };
+
     return (
         <div style={{display: 'flex',
             flexDirection: 'column',
@@ -34,18 +51,20 @@ export default function ObjectsList() {
             margin: '1rem'
             }}>
         {objects != null && objects.map((obj) => (
-                <Button key={obj.id}
-                    onClick={() => {onButtonClicked(obj.name)}}
-                    className="
-                        hover:bg-zinc-600 
-                        hover:scale-105  
-                        active:bg-zinc-500 
-                        active:scale-80
-                        transition-all duration-150
-                    "
-                    >
-                    {obj.name}
-                </Button>
+                <DeleteSideBtn key={obj.id} onButtonClicked={() => deleteItem(obj)}>
+                    <Button 
+                        onClick={() => {onButtonClicked(obj.name)}}
+                        className="
+                            hover:bg-zinc-600 
+                            hover:scale-105  
+                            active:bg-zinc-500 
+                            active:scale-80
+                            transition-all duration-150
+                        "
+                        >
+                        {obj.name}
+                    </Button>
+               </DeleteSideBtn>
             ))}
       </div>
     );
