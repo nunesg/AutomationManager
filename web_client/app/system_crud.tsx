@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppContext } from "./system_store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,18 +8,24 @@ import { Input } from "@/components/ui/input";
 
 export default function SystemCRUD() {
     const [systemName, setSystemName] = useState("");
+    const [systemObj, setSystemObj] = useState({id: 0, name: ""});
     const { apiBase, updateSystemsList } = useAppContext();
+
+    useEffect(() => {
+        setSystemObj({
+            id: 0,
+            name: systemName
+        });
+    }, [systemName]);
 
     // Add an item
     const addItem = async () => {
-        if (!systemName || systemName == "") return;
+        if (!systemObj.name || systemObj.name == "") return;
         try {
             const res = await fetch(`${apiBase}/add/system`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: `${systemName}`
-                })
+                body: JSON.stringify(systemObj)
             });
             updateSystemsList(res);
             setSystemName("");
@@ -30,14 +36,12 @@ export default function SystemCRUD() {
 
     // Delete an item
     const deleteItem = async () => {
-        if (!systemName) return;
+        if (!systemObj.name || systemObj.name == "") return;
         try {
             const res = await fetch(`${apiBase}/delete/system`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: `${systemName}`
-                })
+                body: JSON.stringify(systemObj)
             });
             updateSystemsList(res);
             setSystemName("");
@@ -50,10 +54,6 @@ export default function SystemCRUD() {
         {
             buttonName: 'Add System',
             onClick: addItem
-        },
-        {
-            buttonName: 'Delete System',
-            onClick: deleteItem
         }
     ];
 
@@ -70,7 +70,7 @@ export default function SystemCRUD() {
                 textAlign: 'center',
                 padding: '0 30px 0 30px'
             }}>
-                Use the field below to add the system name you wanna modify
+                Put the name of the system you wanna add on the field below
             </div>
             <Input
                 type="text"

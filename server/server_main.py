@@ -54,7 +54,7 @@ async def handle_add_system(data: SystemData):
 
 @app.post("/api/delete/system", response_model=ResponseData)
 async def handle_delete_system(data: SystemData):
-    queries.delete_system(data.name)
+    queries.delete_system(data.id)
     return {
         "ok": True,
         "message": "System deleted successfully",
