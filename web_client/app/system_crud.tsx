@@ -34,22 +34,6 @@ export default function SystemCRUD() {
         }
     };
 
-    // Delete an item
-    const deleteItem = async () => {
-        if (!systemObj.name || systemObj.name == "") return;
-        try {
-            const res = await fetch(`${apiBase}/delete/system`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(systemObj)
-            });
-            updateSystemsList(res);
-            setSystemName("");
-        } catch (err) {
-            console.error("Error deleting item:", err);
-        }
-    };
-
     const buttons = [
         {
             buttonName: 'Add System',
