@@ -3,8 +3,9 @@
 import React, { useContext, useEffect } from "react";
 import { useAppContext, type SystemData } from "./system_store";
 import { useRouter } from 'next/navigation';
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
+
+import { DeleteSideBtn } from "@/components/ui/ui_utils"
 
 export default function SystemList() {
     const router = useRouter();
@@ -55,11 +56,7 @@ export default function SystemList() {
             margin: '1rem',
          }}>
             {systems != null && systems.map((system) => (
-                <div key={system.id} style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "5px"
-                }}>
+                <DeleteSideBtn key={system.id} onButtonClicked={() => deleteItem(system)}>
                     <Button
                         onClick={() => onButtonClicked(system)}
                         className="
@@ -72,28 +69,7 @@ export default function SystemList() {
                         >
                         {system.name}
                     </Button>
-
-                    <Button 
-                        onClick={() => deleteItem(system)}
-                        variant="ghost"
-                        size="icon"
-                        className="
-                            bg-destructive
-                            rounded-full 
-                            hover:bg-zinc-600 
-                            hover:scale-105 
-                            active:bg-zinc-500 
-                            active:scale-80
-                            transition-all duration-150"
-                        >
-                        <Image
-                            src={"/thrash_icon_white.png"}
-                            alt="icon"
-                            width={20}
-                            height={20}
-                            />
-                    </Button>
-                </div>
+                </DeleteSideBtn>
             ))}
         </div>
     );
