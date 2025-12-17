@@ -5,12 +5,15 @@ from fastapi.middleware.cors import CORSMiddleware
 import queries
 import json
 from api_types import ObjectData, SystemData, ActionData, ResponseData
+import os
 
 app = FastAPI()
+ip = os.environ.get("AUTOMATION_MANAGER_BACKEND_IP")
+
 # allow frontend dev origin
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*", "http://localhost:3000", "http://192.168.1.22:3000", "http://192.168.1.19"],  # your React dev URL
+    allow_origins=["*", f"http://{ip}:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,7 +33,7 @@ def list_actions(systemId):
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Hello": "World", "ip": f"{ip}"}
 
 @app.post("/api/list/systems", response_model=ResponseData)
 async def handle_list_systems():
@@ -113,4 +116,4 @@ async def handle_delete_action(data: ActionData):
     }
 
 def __main__():
-    setup_app();
+    setup_app()

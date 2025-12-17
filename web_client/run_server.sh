@@ -20,4 +20,6 @@ IP_ADDR=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/nu
 
 echo "NEXT_PUBLIC_BACKEND_URL=http://$IP_ADDR:$PORT" > frontend/.env.local
 
+export NEXT_PUBLIC_LOCAL_IP="$IP_ADDR"
+
 npm run dev -- -H $IP_ADDR

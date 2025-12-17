@@ -34,6 +34,8 @@ IP_ADDR=$(ipconfig getifaddr en0 2>/dev/null || ipconfig getifaddr en1 2>/dev/nu
 
 echo "IP_ADDR = $IP_ADDR"
 
+export AUTOMATION_MANAGER_BACKEND_IP="$IP_ADDR"
+
 uvicorn server_main:app --host $IP_ADDR --port $PORT --reload
 echo "Done."
 

@@ -22,7 +22,8 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [systems, setSystems] = useState<SystemData[]>([]);
   const [currentSystemName, setCurrentSystemName] = useState<string>("");
-  const apiBase = "http://192.168.1.22:3050/api"; // your FastAPI server
+  const ip = process.env.NEXT_PUBLIC_LOCAL_IP;
+  const apiBase = `http://${ip}:3050/api`; // your FastAPI server
 
   const updateSystemsList = async (items: Response) => {
     const json = await items.json();
