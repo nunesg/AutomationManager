@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 export default function ObjectCRUD() {
     const [objName, setObjName] = useState("");
     const { apiBase, currentSystem } = useAppContext();
-    const {updateObjectsList} = useObjectsContext();
+    const { updateObjectsList } = useObjectsContext();
 
     // Add an item
     const addItem = async () => {
@@ -20,8 +20,9 @@ export default function ObjectCRUD() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
+                    id: 0,
                     name: objName,
-                    systemName: currentSystem
+                    systemId: currentSystem.id
                 })
             });
             updateObjectsList(res);
