@@ -3,14 +3,13 @@
 import React, { useContext, useEffect } from "react";
 import { useAppContext, type SystemData } from "./system_store";
 import { useRouter } from 'next/navigation';
-import { Button } from "@/components/ui/button"
 
-import { DeleteSideBtn } from "@/components/ui/ui_utils"
+import { ListItems } from "@/components/ui/ui_utils"
 
 export default function SystemList() {
     const router = useRouter();
     const { apiBase, systems, updateSystemsList, setCurrentSystem } = useAppContext();
-    
+
     useEffect(() => {
         const initList = async () => {
             const res = await fetch(`${apiBase}/list/systems`, {
@@ -25,7 +24,8 @@ export default function SystemList() {
         }
     });
 
-    const onButtonClicked = (data: SystemData) => {
+    const onButtonClicked = (index: number) => {
+        const data = systems ? systems[index] : {id: 0, name: ""};
         console.log(`system ${data.name} with id ${data.id} clicked!`);
         setCurrentSystem(data);
         router.push('/objects')
@@ -33,7 +33,8 @@ export default function SystemList() {
 
 
     // Delete an item
-    const deleteItem = async (data: SystemData) => {
+    const deleteItem = async (index: number) => {
+        const data = systems ? systems[index] : {id: 0, name: ""};
         try {
             const res = await fetch(`${apiBase}/delete/system`, {
                 method: "POST",
@@ -47,30 +48,6 @@ export default function SystemList() {
     };
 
     return (
-        <div style={{ 
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            gap: '20px',
-            margin: '1rem',
-         }}>
-            {systems != null && systems.map((system) => (
-                <DeleteSideBtn key={system.id} onButtonClicked={() => deleteItem(system)}>
-                    <Button
-                        onClick={() => onButtonClicked(system)}
-                        className="
-                            hover:bg-zinc-600 
-                            hover:scale-105 
-                            active:bg-zinc-500 
-                            active:scale-80
-                            transition-all duration-150
-                        "
-                        >
-                        {system.name}
-                    </Button>
-                </DeleteSideBtn>
-            ))}
-        </div>
+        <ListItems list={systems ?? []} onSelectItem={onButtonClicked} onDeleteItem={deleteItem} />
     );
 }

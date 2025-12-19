@@ -4,7 +4,7 @@ import React, { useContext, useEffect } from "react";
 import { useAppContext } from "../system_store";
 import { useObjectsContext, type ObjectData } from "./objects_store";
 import { Button } from "@/components/ui/button"
-import { DeleteSideBtn } from "@/components/ui/ui_utils";
+import { DeleteSideBtn, ListItems } from "@/components/ui/ui_utils";
 
 export default function ObjectsList() {
     const {apiBase, currentSystem} = useAppContext();
@@ -22,13 +22,15 @@ export default function ObjectsList() {
         initList();
     }, [currentSystem]);
 
-    const onButtonClicked = (name: string) => {
-        console.log(name + " clicked!");
+    const onButtonClicked = (index: number) => {
+        const data = objects ? objects[index] : {id: 0, name: ""};
+        console.log(data.name + " clicked!");
     };
 
 
     // Delete an item
-    const deleteItem = async (object: ObjectData) => {
+    const deleteItem = async (index: number) => {
+        const object = objects ? objects[index] : {id: 0, name: ""};
         try {
             console.log(`trying to delete item ${JSON.stringify(object)}`)
             const res = await fetch(`${apiBase}/delete/object`, {
@@ -43,29 +45,6 @@ export default function ObjectsList() {
     };
 
     return (
-        <div style={{display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            gap: '20px',
-            margin: '1rem'
-            }}>
-        {objects != null && objects.map((obj) => (
-                <DeleteSideBtn key={obj.id} onButtonClicked={() => deleteItem(obj)}>
-                    <Button 
-                        onClick={() => {onButtonClicked(obj.name)}}
-                        className="
-                            hover:bg-zinc-600 
-                            hover:scale-105  
-                            active:bg-zinc-500 
-                            active:scale-80
-                            transition-all duration-150
-                        "
-                        >
-                        {obj.name}
-                    </Button>
-               </DeleteSideBtn>
-            ))}
-      </div>
+        <ListItems list={objects ?? []} onSelectItem={onButtonClicked} onDeleteItem={deleteItem} />
     );
 }
