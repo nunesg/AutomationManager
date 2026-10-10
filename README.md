@@ -12,3 +12,8 @@ The Automation Manager server will keep track of all this data and allow fronten
   - start/stop motor
   etc
 
+
+## Web client
+
+- `web_client$ sudo ./run_server.sh`
+  - run the client server in an available port
