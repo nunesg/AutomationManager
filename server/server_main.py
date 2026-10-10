@@ -1,14 +1,17 @@
-from typing import Union
+from typing import Union, List
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 import queries
 import json
 from api_types import ObjectData, SystemData, ActionData, ResponseData
+from callbuffer import CallItem, CallBuffer
 import os
+
 
 app = FastAPI()
 ip = os.environ.get("AUTOMATION_MANAGER_BACKEND_IP")
+callBuffer = CallBuffer()
 
 # allow frontend dev origin
 app.add_middleware(
@@ -34,6 +37,27 @@ def list_actions(systemId):
 @app.get("/")
 def read_root():
     return {"Hello": "World", "ip": f"{ip}"}
+
+@app.get(
+    "/buffer/actions/{system_id}/{module_id}",
+    response_model=List[CallItem],
+    summary="Get and remove buffered actions for a specific system and module"
+)
+def get_buffered_actions(system_id: int, module_id: int):
+    """Retrieves and removes all buffered CallItems matching the given systemId and moduleId.
+    
+    - **system_id**: ID of the target system
+    - **module_id**: ID of the target module
+    """
+    try:
+        # Pop matching items from the buffer
+        matched_items = callBuffer.popFrom(systemId=system_id, moduleId=module_id)
+        return matched_items
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"An error occurred while accessing the buffer: {str(e)}"
+        )
 
 @app.post("/api/list/systems", response_model=ResponseData)
 async def handle_list_systems():
@@ -113,6 +137,29 @@ async def handle_delete_action(data: ActionData):
         "ok": True,
         "message": msg,
         "dataJson": list_actions(data.systemId)
+    }
+
+@app.post("/api/call/action", response_model=ResponseData)
+async def handle_call_action(data: ActionData):
+    if not (queries.is_valid_system(data.systemId) and queries.is_valid_object(data.objectId)):
+        return {
+            "ok": False,
+            "message": "System or object invalid.",
+            "dataJson": ""
+        }
+    
+    print(f"Call action {data.name}")
+    callBuffer.push(
+        CallItem(
+            name=data.name,
+            systemId=data.systemId,
+            moduleId=data.objectId
+        )
+    )
+    return {
+        "ok": True,
+        "message": f"Action {data.name} queued successfully.",
+        "dataJson": ""
     }
 
 def __main__():
