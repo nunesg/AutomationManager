@@ -51,9 +51,11 @@ def get_buffered_actions(system_id: int, module_id: int):
     """
     try:
         # Pop matching items from the buffer
+        print(f"get_buffered_actions called for object with systemId=${system_id} and module_id=${module_id}")
         matched_items = callBuffer.popFrom(systemId=system_id, moduleId=module_id)
-        print(f"returning buffered items: ${json.dumps(matched_items)}")
-        return matched_items
+        obj = [item.model_dump() for item in matched_items]
+        print(f"returning buffered items: ${obj}")
+        return obj
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

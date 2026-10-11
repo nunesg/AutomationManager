@@ -1,10 +1,8 @@
-from dataclasses import dataclass
 from queue import Queue, Empty, Full
 from typing import Optional, List
+from pydantic import BaseModel
 
-
-@dataclass
-class CallItem:
+class CallItem(BaseModel):
     """Represents a structured item to be queued in the CallBuffer."""
     name: str
     systemId: int
