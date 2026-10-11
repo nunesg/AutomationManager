@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect } from "react";
 import { useAppContext } from "../system_store";
-import { useObjectsContext, type ObjectData } from "./objects_store";
+import { useObjectsContext, type ObjectData, type ActionData } from "./objects_store";
 import { Button } from "@/components/ui/button"
 import { DeleteSideBtn, ListItems } from "@/components/ui/ui_utils";
 
@@ -27,6 +27,26 @@ export default function ObjectsList() {
         console.log(data.name + " clicked!");
     };
 
+    const onSubmitCall = async (index: number, callStr: string) => {
+        const object = objects ? objects[index] : {id: 0, name: "", systemId: 0};
+        const data: ActionData = {
+            id: 0,
+            name: callStr,
+            systemId: object.systemId,
+            objectId: object.id
+        };
+        try {
+            console.log(`trying to submit call to item ${JSON.stringify(object)}`)
+            const res = await fetch(`${apiBase}/call/action`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+        } catch (err) {
+            console.error("Error deleting object:", err);
+        }
+    };
+
 
     // Delete an item
     const deleteItem = async (index: number) => {
@@ -45,6 +65,7 @@ export default function ObjectsList() {
     };
 
     return (
-        <ListItems list={objects ?? []} onSelectItem={onButtonClicked} onDeleteItem={deleteItem} />
+        <ListItems list={objects ?? []} onSelectItem={onButtonClicked} onDeleteItem={deleteItem} 
+                    onSubmitCall={onSubmitCall} />
     );
 }

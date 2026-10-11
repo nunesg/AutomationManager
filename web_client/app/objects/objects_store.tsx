@@ -6,7 +6,14 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 export type ObjectData = {
     id: number;
     name: string;
-    systemId: string;
+    systemId: number;
+};
+
+export type ActionData = {
+    id: number;
+    name: string;
+    objectId: number;
+    systemId: number;
 };
 
 type ObjectContextType = {
