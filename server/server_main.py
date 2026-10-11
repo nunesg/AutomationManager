@@ -52,6 +52,7 @@ def get_buffered_actions(system_id: int, module_id: int):
     try:
         # Pop matching items from the buffer
         matched_items = callBuffer.popFrom(systemId=system_id, moduleId=module_id)
+        print(f"returning buffered items: ${json.dumps(matched_items)}")
         return matched_items
     except Exception as e:
         raise HTTPException(
