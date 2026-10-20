@@ -70,12 +70,33 @@ export function ListItems({ list, onSelectItem, onDeleteItem, onSubmitCall }: Li
             margin: '1rem',
         }}>
             {list != null && list.map((item, index) => (
-                <div key={index} 
-                        onPointerOver={() => setDeleteIndex(index)}
-                        onPointerLeave={() => {
-                            setDeleteIndex(-1);
+                <div key={index} style={{
+                    display: 'flex', 
+                    flexDirection: 'row', 
+                    gap: '20px'
+                }}
+                    >
+                    <Button
+                        className="
+                                hover:bg-zinc-600 
+                                hover:scale-105 
+                                active:bg-zinc-500 
+                                active:scale-80
+                                transition-all duration-150
+                            "
+                        onClick={() => {
                             setInputValue("");
-                        }}>
+                            setDeleteIndex(deleteIndex != -1 ? -1 : index);
+                        }}
+                    >
+                        <Image
+                            src={"/expand.png"}
+                            alt="icon"
+                            width={25}
+                            height={25}
+                        />
+                    </Button>
+
                     <DeleteSideBtn key={item.id} 
                         onButtonClicked={() => onDeleteItem(index)} 
                         index={index} 
