@@ -18,7 +18,9 @@ export type ActionData = {
 
 type ObjectContextType = {
   objects: ObjectData[] | null;
+  currentObject: ObjectData | null;
   setObjects: (objects: ObjectData[]) => void;
+  setCurrentObject: (object: ObjectData) => void;
   updateObjectsList: (systems: Response) => void;
 };
 
@@ -26,6 +28,7 @@ const ObjectContext = createContext<ObjectContextType | undefined>(undefined);
 
 export function ObjectsProvider({ children }: { children: ReactNode }) {
   const [objects, setObjects] = useState<ObjectData[]>([]);
+  const [currentObject, setCurrentObject] = useState<ObjectData | null>(null);
 
   const updateObjectsList = async (items: Response) => {
     const json = await items.json();
@@ -38,6 +41,8 @@ export function ObjectsProvider({ children }: { children: ReactNode }) {
   return (
     <ObjectContext.Provider value={{ 
         objects,
+        currentObject,
+        setCurrentObject,
         setObjects,
         updateObjectsList
         }}>

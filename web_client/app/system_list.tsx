@@ -28,7 +28,7 @@ export default function SystemList() {
         const data = systems ? systems[index] : {id: 0, name: ""};
         console.log(`system ${data.name} with id ${data.id} clicked!`);
         setCurrentSystem(data);
-        router.push('/objects')
+        router.push('/objects');
     };
 
 

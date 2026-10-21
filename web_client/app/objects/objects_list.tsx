@@ -5,10 +5,12 @@ import { useAppContext } from "../system_store";
 import { useObjectsContext, type ObjectData, type ActionData } from "./objects_store";
 import { Button } from "@/components/ui/button";
 import { DeleteSideBtn, ListItems } from "@/components/ui/ui_utils";
+import { useRouter } from 'next/navigation';
 
 export default function ObjectsList() {
+    const router = useRouter();
     const {apiBase, currentSystem} = useAppContext();
-    const {objects, updateObjectsList} = useObjectsContext();
+    const {objects, updateObjectsList, setCurrentObject} = useObjectsContext();
 
     useEffect(() => {
         const initList = async () => {
@@ -24,6 +26,11 @@ export default function ObjectsList() {
 
     const onButtonClicked = (index: number) => {
         const data = objects ? objects[index] : {id: 0, name: ""};
+        if (objects != null && objects[index] != null) {
+            console.log('routing to actions');
+            setCurrentObject(objects[index]);
+            router.push("/objects/actions")
+        }
         console.log(data.name + " clicked!");
     };
 
