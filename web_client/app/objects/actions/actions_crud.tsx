@@ -63,7 +63,7 @@ export default function ActionsCRUD() {
                 placeholder="Enter action name"
                 onChange={(e) => setActionName(e.target.value)}
                 className="placeholder:text-zinc-400"
-                style={{ margin: "1rem", maxWidth: "50%" }}
+                style={{ margin: "1rem", maxWidth: "300px" }}
             />
             <div
                 style={{

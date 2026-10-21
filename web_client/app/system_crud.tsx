@@ -62,7 +62,7 @@ export default function SystemCRUD() {
                 placeholder="Enter system name"
                 onChange={(e) => setSystemName(e.target.value)}
                 className="placeholder:text-zinc-400"
-                style={{ margin: "1rem", maxWidth: "50%" }}
+                style={{ margin: "1rem", maxWidth: "300px" }}
             />
             <div
                 style={{
