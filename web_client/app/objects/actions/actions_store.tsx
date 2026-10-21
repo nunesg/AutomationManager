@@ -2,6 +2,7 @@
 
 // store.ts
 import { createContext, useContext, useState, ReactNode } from 'react';
+import { keysToCamel } from '@/lib/utils';
 import { ActionData } from "../objects_store";
 
 type ActionsContextType = {
@@ -15,13 +16,17 @@ const ActionsContext = createContext<ActionsContextType | undefined>(undefined);
 export function ActionsProvider({ children }: { children: ReactNode }) {
   const [actions, setActions] = useState<ActionData[]>([]);
 
-  const updateActionsList = async (items: Response) => {
-    const json = await items.json();
-    console.log("json = ", json);
-    const data = JSON.parse(json.dataJson);
-    console.log(typeof data);
-    // setActions(data);
-  };
+    const updateActionsList = async (items: Response) => {
+        const json = await items.json();
+        const rawData = JSON.parse(json.dataJson);
+        console.log('actions raw data: \n' + JSON.stringify(rawData));
+        
+        const formattedData = keysToCamel(rawData);
+
+        console.log('actions formatted data: \n' + JSON.stringify(formattedData));
+        
+        setActions(formattedData);
+    };
 
   return (
     <ActionsContext.Provider value={{ 

@@ -31,8 +31,13 @@ def list_systems():
 def list_objects(systemId):
     return json.dumps(queries.get_objects(systemId))
 
-def list_actions(systemId):
-    return json.dumps(queries.get_actions(systemId))
+def list_system_actions(systemId):
+    return json.dumps(queries.get_system_actions(systemId))
+
+def list_object_actions(systemId, moduleId):
+    if (moduleId <= 0):
+        return list_system_actions(systemId)
+    return json.dumps(queries.get_object_actions(systemId, moduleId))
 
 @app.get("/")
 def read_root():
@@ -116,11 +121,11 @@ async def handle_delete_object(data: ObjectData):
 
 
 @app.post("/api/list/actions", response_model=ResponseData)
-async def handle_list_actions(data: SystemData):
+async def handle_list_actions(data: ObjectData):
     return {
         "ok": True,
         "message": "Request processed successfully",
-        "dataJson": list_actions(data.id)
+        "dataJson": list_object_actions(data.systemId, data.id)
     }
 
 @app.post("/api/add/action", response_model=ResponseData)
@@ -130,16 +135,17 @@ async def handle_add_action(data: ActionData):
     return {
         "ok": True,
         "message": msg,
-        "dataJson": list_actions(data.systemId)
+        "dataJson": list_object_actions(data.systemId, data.objectId)
     }
 
 @app.post("/api/delete/action", response_model=ResponseData)
 async def handle_delete_action(data: ActionData):
+    print(f"delete action {data.model_dump_json}")
     msg = queries.delete_action(data)
     return {
         "ok": True,
         "message": msg,
-        "dataJson": list_actions(data.systemId)
+        "dataJson": list_object_actions(data.systemId, data.objectId)
     }
 
 @app.post("/api/call/action", response_model=ResponseData)

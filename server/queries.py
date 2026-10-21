@@ -83,11 +83,11 @@ def delete_system(systemId):
     db.close()
 
 # returns actions registered for a specific object
-def get_actions(sysId, objId):
+def get_object_actions(sysId, objId):
     print(f"get actions for system {sysId} and object {objId}")
     db = database.get_db()
     if (objId == None):
-        return get_actions(sysId)
+        return get_system_actions(sysId)
     
     actions_arr = db.execute(f"SELECT * FROM {ACTIONS_TABLE_NAME} WHERE system_id = {sysId} AND object_id = {objId}").fetchall() or []
     print(f"Actions array is {actions_arr}")
@@ -95,7 +95,7 @@ def get_actions(sysId, objId):
     print(f"actions for system {sysId} and obj {objId} = {arr}")
     return arr
 
-def get_actions(systemId):
+def get_system_actions(systemId):
     print(f"Get actions for system {systemId}")
     if (not is_valid_system(systemId)):
         msg = f"Not possible to get actions for system with id {systemId}. Id doesn't exist"
@@ -125,7 +125,7 @@ def delete_action(actionData: ActionData):
         print(msg)
         return msg
     db = database.get_db()
-    db.execute(f"DELETE FROM {ACTIONS_TABLE_NAME} WHERE id = ? AND system_id = ?;", (actionData.id, actionData.systemId))
+    db.execute(f"DELETE FROM {ACTIONS_TABLE_NAME} WHERE id = ? AND system_id = ? AND object_id = ?;", (actionData.id, actionData.systemId, actionData.objectId))
     db.commit()
     db.close()
     return f"Action <{actionData.id}> deleted successfully"

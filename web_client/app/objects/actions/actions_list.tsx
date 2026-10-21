@@ -70,7 +70,15 @@ export default function ActionsList() {
 
     // Delete an item
     const deleteItem = async (index: number) => {
-        const action = actions ? actions[index] : {id: 0, name: ""};
+        if (!currentObject) {
+            return;
+        }
+        const action = actions ? actions[index] : {
+            id: 0, 
+            name: "", 
+            systemId: currentObject.systemId, 
+            objectId: currentObject.id
+        };
         try {
             console.log(`trying to delete item ${JSON.stringify(action)}`)
             const res = await fetch(`${apiBase}/delete/action`, {
