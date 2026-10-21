@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useContext, useEffect } from "react";
+import React, { ReactNode, useContext, useState, useEffect } from "react";
 import { useAppContext } from "../system_store";
 import { useObjectsContext, type ObjectData, type ActionData } from "./objects_store";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { DeleteSideBtn, ListItems } from "@/components/ui/ui_utils";
 
 export default function ObjectsList() {
@@ -47,6 +47,14 @@ export default function ObjectsList() {
         }
     };
 
+    const onExpandItem = (index: number) => {
+        return (
+            <SendAction onSubmitCall={(value: string) => {
+                onSubmitCall(index, value);
+            }}/>
+        );
+    };
+
 
     // Delete an item
     const deleteItem = async (index: number) => {
@@ -66,6 +74,68 @@ export default function ObjectsList() {
 
     return (
         <ListItems list={objects ?? []} onSelectItem={onButtonClicked} onDeleteItem={deleteItem} 
-                    onSubmitCall={onSubmitCall} />
+                    onExpandItem={onExpandItem} />
     );
+}
+
+function SendAction({onSubmitCall}: {onSubmitCall: (value: string) => void}): React.ReactNode {
+    const [inputValue, setInputValue] = useState("");
+    return (
+        <div style={{ 
+            display: 'flex',
+            flex: 1, 
+            flexDirection: "column", 
+            padding: '32px',
+            gap: '8px',
+            alignItems: 'center',
+            backgroundColor: 'rgb(70, 137, 145)',
+            border: '1px solid rgba(255, 255, 255, 1)',
+            borderRadius: '20px'
+            }} >
+            
+            <div style={{ 
+                display: 'flex',
+                flex: 1,
+                flexDirection: 'column'
+            }}  >
+                <div style={{
+                    fontSize: '20px'
+                }}> 
+                    Send Call 
+                </div>
+                <p> type the api you would like to call for this object </p>
+            </div>
+            
+            <div style={{ 
+                display: 'flex', 
+                flexDirection: 'row', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                gap: '8px', 
+                maxWidth: '300px' 
+                }}>
+                <input 
+                    type="text" 
+                    placeholder="Enter text..." 
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    style={{ display: 'flex', flex: 1, padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} 
+                />
+                <Button
+                    onClick={() => {
+                        onSubmitCall ? onSubmitCall(inputValue) : undefined;
+                    }}
+                    className="
+                        hover:bg-zinc-600 
+                        hover:scale-105 
+                        active:bg-zinc-500 
+                        active:scale-80
+                        transition-all duration-150
+                    "
+                >
+                    Submit!
+                </Button>
+            </div>
+        </div>
+    )
 }

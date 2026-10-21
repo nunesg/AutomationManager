@@ -18,9 +18,9 @@ type ListItemType = {
 
 type ListItemsProps = ComponentProps<"div"> & {
     list: ListItemType[];
+    onExpandItem?: (itemIndex: number) => React.ReactNode;
     onSelectItem: (itemIndex: number) => void;
     onDeleteItem: (itemIndex: number) => void;
-    onSubmitCall?: (itemIndex: number, callStr: string) => void;
 };
 
 export function DeleteSideBtn({ onButtonClicked, index, activeIndex, children, ...props }: DeleteSideBtnProps) {
@@ -28,7 +28,7 @@ export function DeleteSideBtn({ onButtonClicked, index, activeIndex, children, .
         <div style={{
             display: "flex",
             flexDirection: "row",
-            gap: "5px"
+            gap: "20px"
             }}
             {...props}
         >
@@ -57,95 +57,81 @@ export function DeleteSideBtn({ onButtonClicked, index, activeIndex, children, .
     );
 }
 
-export function ListItems({ list, onSelectItem, onDeleteItem, onSubmitCall }: ListItemsProps) {
-    const [deleteIndex, setDeleteIndex] = useState(-1);
-    const [inputValue, setInputValue] = useState("");
+export function ListItems({ list, onExpandItem, onSelectItem, onDeleteItem }: ListItemsProps) {
+    const [expandedItemIndex, setExpandedItemIndex] = useState(-1);
     return (
         <div style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-start',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             gap: '20px',
             margin: '1rem',
         }}>
             {list != null && list.map((item, index) => (
                 <div key={index} style={{
-                    display: 'flex', 
-                    flexDirection: 'row', 
-                    gap: '20px'
+                    display: 'flex',
+                    flex: 1,
+                    flexDirection: 'column', 
+                    alignItems: 'flex-start',
+                    gap: '10px'
                 }}
                     >
-                    <Button
-                        className="
-                                hover:bg-zinc-600 
-                                hover:scale-105 
-                                active:bg-zinc-500 
-                                active:scale-80
-                                transition-all duration-150
-                            "
-                        onClick={() => {
-                            setInputValue("");
-                            setDeleteIndex(deleteIndex != -1 ? -1 : index);
-                        }}
-                    >
-                        <Image
-                            src={"/expand.png"}
-                            alt="icon"
-                            width={25}
-                            height={25}
-                        />
-                    </Button>
-
-                    <DeleteSideBtn key={item.id} 
-                        onButtonClicked={() => onDeleteItem(index)} 
-                        index={index} 
-                        activeIndex={deleteIndex}
-                        >
-                        <Button
-                            onClick={() => onSelectItem(index)}
-                            className="
-                                hover:bg-zinc-600 
-                                hover:scale-105 
-                                active:bg-zinc-500 
-                                active:scale-80
-                                transition-all duration-150
-                            "
-                        >
-                            {item.name}
-                        </Button>
-                    </DeleteSideBtn>
-                    {index === deleteIndex &&
-                        <div style={{ flex: 1, flexDirection: "row", padding: '8px' }} >
-                            <div style={{ flex: 1, padding: '8px' }}  >
-                                <h2> Send Call </h2>
-                                <p> type the api you would like to call for this object </p>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', maxWidth: '300px' }}>
-                                <input 
-                                    type="text" 
-                                    placeholder="Enter text..." 
-                                    value={inputValue}
-                                    onChange={(e) => setInputValue(e.target.value)}
-                                    style={{ flex: 1, padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} 
-                                />
-                                <Button
-                                    onClick={() => {
-                                        onSubmitCall ? onSubmitCall(index, inputValue) : undefined;
-                                    }}
-                                    className="
+                    <div key={index} style={{
+                        display: 'flex', 
+                        flexDirection: 'row', 
+                        gap: '20px'
+                    }}>
+                        {onExpandItem != undefined &&
+                            <Button
+                                className="
                                         hover:bg-zinc-600 
                                         hover:scale-105 
                                         active:bg-zinc-500 
                                         active:scale-80
                                         transition-all duration-150
                                     "
-                                >
-                                    Submit!
-                                </Button>
-                            </div>
-                        </div>
-                    }
+                                onClick={() => {
+                                    setExpandedItemIndex(expandedItemIndex != -1 ? -1 : index);
+                                }}
+                            >
+                                <Image
+                                    src={"/expand.png"}
+                                    alt="icon"
+                                    width={25}
+                                    height={25}
+                                />
+                            </Button>
+                        }
+
+                        <DeleteSideBtn key={item.id} 
+                            onButtonClicked={() => onDeleteItem(index)} 
+                            index={index} 
+                            activeIndex={expandedItemIndex}
+                            >
+                            <Button
+                                onClick={() => onSelectItem(index)}
+                                className="
+                                    hover:bg-zinc-600 
+                                    hover:scale-105 
+                                    active:bg-zinc-500 
+                                    active:scale-80
+                                    transition-all duration-150
+                                "
+                            >
+                                {item.name}
+                            </Button>
+                        </DeleteSideBtn>
+                    </div>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginLeft: '24px'
+                    }}>
+                        {index === expandedItemIndex && onExpandItem?.(expandedItemIndex)}
+                    </div>
                 </div>
             ))}
         </div>
