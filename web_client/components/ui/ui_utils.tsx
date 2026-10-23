@@ -18,6 +18,7 @@ type ListItemType = {
 
 type ListItemsProps = ComponentProps<"div"> & {
     list: ListItemType[];
+    shouldExpand?: boolean;
     onExpandItem?: (itemIndex: number) => React.ReactNode;
     onSelectItem: (itemIndex: number) => void;
     onDeleteItem: (itemIndex: number) => void;
@@ -57,8 +58,9 @@ export function DeleteSideBtn({ onButtonClicked, index, activeIndex, children, .
     );
 }
 
-export function ListItems({ list, onExpandItem, onSelectItem, onDeleteItem }: ListItemsProps) {
+export function ListItems({ list, shouldExpand = false, onExpandItem = () => null, onSelectItem, onDeleteItem }: ListItemsProps) {
     const [expandedItemIndex, setExpandedItemIndex] = useState(-1);
+    console.log('shouldExpand = ' + shouldExpand);
     return (
         <div style={{
             display: 'flex',
@@ -130,7 +132,7 @@ export function ListItems({ list, onExpandItem, onSelectItem, onDeleteItem }: Li
                         alignItems: 'center',
                         marginLeft: '24px'
                     }}>
-                        {index === expandedItemIndex && onExpandItem?.(expandedItemIndex)}
+                        {shouldExpand == true && index === expandedItemIndex && onExpandItem?.(expandedItemIndex)}
                     </div>
                 </div>
             ))}

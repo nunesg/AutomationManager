@@ -93,8 +93,7 @@ export default function ActionsList() {
     };
 
     return (
-        <ListItems list={actions ?? []} onSelectItem={onButtonClicked} onDeleteItem={deleteItem} 
-                    onExpandItem={() => {}} />
+        <ListItems list={actions ?? []} onSelectItem={onButtonClicked} onDeleteItem={deleteItem} />
     );
 }
 

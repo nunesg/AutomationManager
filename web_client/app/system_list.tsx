@@ -48,6 +48,6 @@ export default function SystemList() {
     };
 
     return (
-        <ListItems list={systems ?? []} onExpandItem={() => {}} onSelectItem={onButtonClicked} onDeleteItem={deleteItem} />
+        <ListItems list={systems ?? []} onSelectItem={onButtonClicked} onDeleteItem={deleteItem} />
     );
 }

@@ -81,7 +81,7 @@ export default function ObjectsList() {
 
     return (
         <ListItems list={objects ?? []} onSelectItem={onButtonClicked} onDeleteItem={deleteItem} 
-                    onExpandItem={onExpandItem} />
+                    shouldExpand={true} onExpandItem={onExpandItem} />
     );
 }
 

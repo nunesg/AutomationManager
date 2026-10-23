@@ -60,7 +60,7 @@ export default function ObjectCRUD() {
                 placeholder="Enter object name"
                 onChange={(e) => setObjName(e.target.value)}
                 className="placeholder:text-zinc-400"
-                style={{ margin: "1rem", maxWidth: "50%" }}
+                style={{ margin: "1rem", maxWidth: "300px" }}
             />
             <div
                 style={{
