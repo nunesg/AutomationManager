@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import SystemList from "./system_list";
 import SystemCRUD from "./system_crud";
 import Expand from "./expand";
+import { ConfirmButton } from "@/components/ui/button";
 
 function App() {
 
@@ -58,6 +59,12 @@ function App() {
 
 
         </div>
+
+        <ConfirmButton onConfirm={() => {
+          console.log('OnConfirm clicked!');
+        }}>
+          ConfirmButtonTest
+        </ConfirmButton>
 
       </div>
   );

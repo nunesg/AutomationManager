@@ -1,6 +1,17 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert_dialog"
 
 import { cn } from "@/lib/utils"
 
@@ -36,16 +47,19 @@ const buttonVariants = cva(
   }
 )
 
+export interface ButtonProps
+  extends React.ComponentProps<"button">,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+}
+
 function Button({
   className,
   variant,
   size,
   asChild = false,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
+}: ButtonProps) {
   const Comp = asChild ? Slot : "button"
 
   return (
@@ -55,6 +69,51 @@ function Button({
       {...props}
     />
   )
+}
+
+export interface ConfirmButtonProps extends ButtonProps {
+  onConfirm: () => void;
+  title?: string;
+  description?: string;
+  confirmText?: string;
+  cancelText?: string;
+}
+
+export function ConfirmButton({
+  onConfirm,
+  title = "Are you sure?",
+  description = "This action cannot be undone.",
+  confirmText = "Continue",
+  cancelText = "Cancel",
+  children,
+  variant,
+  size,
+  className = "hover:bg-zinc-600 hover:scale-105 active:bg-zinc-500 active:scale-80 transition-all duration-150",
+  ...props
+}: ConfirmButtonProps) {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant={variant} size={size} className={className} {...props}>
+          {children}
+        </Button>
+      </AlertDialogTrigger>
+      
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
+        </AlertDialogHeader>
+        
+        <AlertDialogFooter>
+          <AlertDialogCancel className={className} >{cancelText}</AlertDialogCancel>
+          <AlertDialogAction onClick={onConfirm} className={className} >
+            {confirmText}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
 }
 
 export { Button, buttonVariants }
