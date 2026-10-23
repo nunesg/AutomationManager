@@ -1,1 +1,1 @@
-sqlite3 database.db < schema.sql
+sqlite3 ../data/database.db < schema.sql
